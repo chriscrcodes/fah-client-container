@@ -1,0 +1,29 @@
+<config>
+    <!-- Slot Control -->
+    <power v='full'/> <!-- Run 100% of the time but with idle priority -->
+
+    <!-- Client Information -->
+    <user value='Anonymous'/>   <!-- CHANGE VALUE HERE -->
+    <passkey value=''/>         <!-- CHANGE VALUE HERE -->
+    <team value='0'/>           <!-- CHANGE VALUE HERE -->
+
+    <!-- Disable unnecessary features -->
+    <web-enable v='false'/>
+    <disable-viz v='true'/>
+    <gui-enabled v='false'/>
+
+    <!-- 1 GPU Folding Slot -->
+    <slot id='0' type='GPU'>
+        <gpu-index v='0'/>
+        <opencl-index v='0'/>
+        <cuda-index v='0'/>
+    </slot>
+
+    <!-- 1 CPU Folding Slot -->
+    <slot id='1' type='CPU'>
+    </slot>
+
+    <!-- Remote Control (port: 36330) -->
+    <allow v='0/0'/> <!-- Allow all IP addresses -->
+    <password v='password'/>    <!-- CHANGE VALUE HERE -->
+</config>
