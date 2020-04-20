@@ -1,0 +1,28 @@
+apiVersion: '2018-10-01'
+name: foldingathome
+properties:
+  imageRegistryCredentials:
+  - server: [ContainerRegistryName].azurecr.io
+    username: [ClientId]
+    password: [ClientSecret]
+  containers:
+  - name: GPUK80
+    properties:
+      image: [ContainerRegistryName].azurecr.io/[RepositoryName]:[Tag]
+      resources:
+        requests:
+          cpu: 6
+          memoryInGB: 56
+          gpu:
+            count: 1
+            sku: K80
+      ports:
+      - port: 36330
+        protocol: TCP
+  osType: Linux
+  restartPolicy: OnFailure
+  ipAddress:
+    type: Public
+    ports:
+      - port: 36330
+    dnsNameLabel: [DNSName]
