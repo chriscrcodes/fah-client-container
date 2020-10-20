@@ -8,7 +8,7 @@ properties:
   containers:
   - name: GPUK80
     properties:
-      image: [ContainerRegistryName].azurecr.io/[RepositoryName]:[Tag]
+      image: [ContainerRegistryName].azurecr.io/[DockerImageName]:[Tag]
       resources:
         requests:
           cpu: 6
