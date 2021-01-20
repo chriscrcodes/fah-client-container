@@ -3,8 +3,8 @@ FROM nvidia/cuda:9.2-base-ubuntu18.04
 
 # Folding@home client version and binary file checksum
 ARG FAH_VERSION_MAJOR="7.6"
-ARG FAH_VERSION_MINOR="13"
-ARG FAH_CHECKSUM="113CF292F7CC3A49ED718F0C44849E30018E799FA9F1EACD75716BADBCB64CC8"
+ARG FAH_VERSION_MINOR="21"
+ARG FAH_CHECKSUM="2827f05f1c311ee6c7eca294e4ffb856c81957e8f5bfc3113a0ed27bb463b094"
 
 # Update repository and install prerequisites
 RUN apt-get update \
@@ -12,14 +12,18 @@ RUN apt-get update \
       ocl-icd-opencl-dev \
       clinfo \
       curl \
+    # point at lib mapped in by container runtime
     && mkdir -p /etc/OpenCL/vendors \
     && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd \
+    # next line gets past the fahclient.postinst
     && mkdir -p /etc/fahclient && touch /etc/fahclient/config.xml \
+    # download and verify checksum
     && curl -fsSL \
       https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v${FAH_VERSION_MAJOR}/fahclient_${FAH_VERSION_MAJOR}.${FAH_VERSION_MINOR}_amd64.deb \
       -o fah.deb \
     && echo "${FAH_CHECKSUM} fah.deb" \
       | sha256sum -c --strict - \
+    # install and cleanup
     && DEBIAN_FRONTEND=noninteractive dpkg --install --force-depends fah.deb \
     && rm -rf fah.deb \
     && apt-get purge --autoremove -y curl \
